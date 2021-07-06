@@ -1,0 +1,39 @@
+void list_()
+{
+   
+    list <pair<string, size_t>> m;   
+    string word;
+    auto begin = chrono::steady_clock::now();
+    ifstream slovar;
+    slovar.open("eng.txt");          
+    while (slovar >> word)
+    {      
+        auto it = remove_if(word.begin(), word.end(), [](char c) { return ispunct(c); });
+        word.erase(it, word.end());       
+        auto it_2 = remove_if(word.begin(), word.end(), [](char c) { return isdigit(c); });
+        word.erase(it_2, word.end());       
+        list<pair<string, size_t>>::iterator pos;
+        for (pos = m.begin(); pos != m.end(); pos++)
+        {
+            if (pos->first == word)
+            {              
+                pos->second++;
+                break;
+            }
+        }
+      
+            m.push_back(pair <string, size_t>(word, 1));
+    }
+            auto end = chrono::steady_clock::now();
+            auto elapsed_ms = chrono::duration_cast<chrono::seconds>(end - begin);
+            cout << "Run time list: " << elapsed_ms.count() << " seconds\n";
+           
+            ofstream out;
+            out.open("list.txt");
+            for (const auto& pair : m)
+            {
+                out << pair.second << ": " << pair.first << "\n";
+            }
+            slovar.close();
+            out.close();
+}
