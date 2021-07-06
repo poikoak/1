@@ -1,0 +1,484 @@
+ДОмашнее задание 14
+
+Задание 1
+
+Функция принимает двумерный динамический массив и по ссылкам возвращает среднее арифметическое,
+количество простых чисел и количество отрицательных чисел.
+
+РЕШЕНИЕ
+
+#include <iostream>
+#include "time.h"
+using namespace std;
+void fill_matrix(int** c, int height, int width, int start, int end)
+{
+	srand(time(NULL));
+	for (int i = 0; i < height; i++)
+	{
+		for (int k = 0; k < width; k++)
+		{
+			c[i][k] = rand() % (end - start + 1) + start;
+			if (c[i][k] >= 0 && c[i][k] < 10)
+			{
+				cout << "  " << c[i][k] << " ";
+			}
+			else if (c[i][k] <= -10)
+				cout << c[i][k] << " ";
+			else cout << " " << c[i][k] << " ";
+		}
+		cout << endl;
+	}
+	return;
+}
+bool simple_check(int c, int n=2)
+{
+	int res = 1;
+	if (n<c)
+	{
+		res = simple_check(c, n+ 1);
+	}
+	return res = (c == n) ? true : (c % n != 0 && res == 1) ? true : false;
+}
+ void analyze_matrix(int** c, int rows, int cols, double& mean, int& simple, int& neg)
+{
+	 for (int i = 0; i < rows; i++)
+	 {
+		 for (int k = 0; k < cols; k++)
+		 {
+			 mean += c[i][k];
+			 if (c[i][k] < 0)
+			 {
+				 ++neg;
+				 c[i][k] *= -1;
+			 }
+			 simple = (simple_check(c[i][k]) == 1) ? ++simple : simple;
+				 
+		 }
+	 }
+	 mean = (mean / (rows * cols));
+
+	return;
+}
+void main()
+{
+	int rows, cols;
+	cout << "Enter the number of rows you want to have in your matrix: ";
+	cin >> rows;
+	cout << "Enter the number of columns you want to have in your matrix: ";
+	cin >> cols;
+	int start, end;
+	cout << "Enter the range of numbers in your matrix by entering the first and the last numbers of the range:\n";
+	cin >> start;
+	cin >> end;
+	cout << "\n\nYour matrix is as follows: \n";
+	int** c = new int* [cols];
+	for (int i = 0; i < rows; i++)
+	{
+		c[i] = new int[cols];
+	}
+	fill_matrix(c, rows, cols, start, end);
+	double mean = 0;
+	int simple = 0;
+	int neg = 0;
+	analyze_matrix(c, rows, cols, mean, simple, neg);
+	cout << "\n\nThe arithmetic mean of the elements in the matrix is " << mean << ".\n";
+	cout << "\n\nThe number of simple elements in the matrix is " << simple << ".\n";
+	cout << "\n\nThe number of negative elements in the matrix is " << neg << ".\n";
+	cout << "\n\nThe end.\n";
+
+	for (int j = 0; j < rows; j++)
+	{
+		delete[] c[j];
+	}
+
+	delete[]c;
+}
+
+еще одно РЕШЕНИЕ с одной функицей (без рекурсии)
+
+#include <iostream>
+#include "time.h"
+using namespace std;
+void fill_matrix(int** c, int height, int width, int start, int end)
+{
+	srand(time(NULL));
+	for (int i = 0; i < height; i++)
+	{
+		for (int k = 0; k < width; k++)
+		{
+			c[i][k] = rand() % (end - start + 1) + start;
+			if (c[i][k] >= 0 && c[i][k] < 10)
+			{
+				cout << "  " << c[i][k] << " ";
+			}
+			else if (c[i][k] <= -10)
+				cout << c[i][k] << " ";
+			else cout << " " << c[i][k] << " ";
+		}
+		cout << endl;
+	}
+	return;
+}
+
+void analyze_matrix(int** c, int rows, int cols, double& mean, int& simple, int& neg)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int k = 0; k < cols; k++)
+		{
+			mean += c[i][k];
+			if (c[i][k] < 0)
+			{
+				++neg;
+				c[i][k] *= -1;
+			}
+			int temp = 0;
+			if (c[i][k] > 2)
+			{
+				for (int j = 2; j < c[i][k]; j++)
+				{
+					temp = (c[i][k] % j == 0) ? ++temp :temp;
+
+				}
+			}
+			simple = (c[i][k] == 1 || c[i][k] == 2 || temp == 0) ? ++simple : simple;
+		}
+	}
+
+	mean = (mean / (rows * cols));
+
+	return;
+}
+void main()
+{
+	int rows, cols;
+	cout << "Enter the number of rows you want to have in your matrix: ";
+	cin >> rows;
+	cout << "Enter the number of columns you want to have in your matrix: ";
+	cin >> cols;
+	int start, end;
+	cout << "Enter the range of numbers in your matrix by entering the first and the last numbers of the range:\n";
+	cin >> start;
+	cin >> end;
+	cout << "\n\nYour matrix is as follows: \n";
+	int** c = new int* [cols];
+	for (int i = 0; i < rows; i++)
+	{
+		c[i] = new int[cols];
+	}
+	fill_matrix(c, rows, cols, start, end);
+	double mean = 0;
+	int simple = 0;
+	int neg = 0;
+	analyze_matrix(c, rows, cols, mean, simple, neg);
+	cout << "\n\nThe arithmetic mean of the elements in the matrix is " << mean << ".\n";
+	cout << "\n\nThe number of simple elements in the matrix is " << simple << ".\n";
+	cout << "\n\nThe number of negative elements in the matrix is " << neg << ".\n";
+	cout << "\n\nThe end.\n";
+
+	for (int j = 0; j < rows; j++)
+	{
+		delete[] c[j];
+	}
+
+	delete[]c;
+}
+************************************************************************************************
+
+Задание 2
+
+Пользователь задаёт исходную папку, программа подсчитывает общий размер
+всех файлов в этой папке и в подпапках, а также подсчитывает количество подпапок
+
+РЕШЕНИЕ
+
+#include <iostream>
+#include <io.h>
+
+using namespace std;
+
+void scan_dir(const char* dir_path, const char* comp, const char* mask, long long& a, long&b, long long&c)
+{
+	char* new_path = new char[4000];
+	char* mask_path = new char[4000];
+
+	strcpy(mask_path, dir_path);
+	strcat(mask_path, "\\");
+	strcat(mask_path, mask);
+
+	_finddata_t c_file;
+	long hFile;
+	hFile = _findfirst(mask_path, &c_file);
+
+	if (strcmp(c_file.name, ".") != 0 && strcmp(c_file.name, "..") != 0)
+	{
+		
+		if (c_file.attrib & _A_SUBDIR)
+		{
+			++b;
+			cout << c_file.name << "   " << "<DIR>" << endl;
+
+			
+			strcpy(new_path, dir_path);
+			strcat(new_path, "\\");
+			strcat(new_path, c_file.name);
+			
+			scan_dir(new_path, comp, mask, a, b, c);
+		}
+		else
+			cout << dir_path << "\\" << c_file.name << "   " << c_file.size << endl;
+		a += c_file.size;
+		if (strcmp(dir_path, comp) != 0)
+		{
+			c += c_file.size;
+		}
+	}
+
+	
+while (_findnext(hFile, &c_file) == 0)
+	{
+		if (strcmp(c_file.name, ".") != 0 && strcmp(c_file.name, "..") != 0)
+		{
+			if (c_file.attrib & _A_SUBDIR)
+			{
+				++b;
+				cout << c_file.name << "   " << "<DIR>" << endl;
+				strcpy(new_path, dir_path);
+				strcat(new_path, "\\");
+				strcat(new_path, c_file.name);
+				scan_dir(new_path, comp, mask, a, b, c);
+			}
+			else
+				cout << dir_path << "\\" << c_file.name << "   " << c_file.size << endl;
+			a += c_file.size;
+			if (strcmp (dir_path, comp)!=0)
+			{
+				c += c_file.size;
+			}
+		}
+	}
+	
+	_findclose(hFile);
+
+	delete[] new_path;
+	delete[] mask_path;
+}
+
+void main()
+{
+	long long filesizetotal = 0;
+	long subdircount = 0;
+	long long filesizesubdir = 0;
+	long long temp = 0;
+	char str1[200];
+	char str2[200];
+	cout << "Enter the location address:\n";
+	cin.getline(str1, 200);
+	scan_dir(str1, str1, "*.*", filesizetotal, subdircount, filesizesubdir);
+	cout << "\n\nThe total size of all files in the folder is " << filesizetotal << ".\n";
+	cout << "\n\nThe number of subfolders in the folder is " << subdircount << ".\n";
+	cout << "\n\nThe total size of all files in the subfolders is " << filesizesubdir << ".\n";
+	cout << "\n\nThe end.\n";
+}
+
+************************************************************************************************
+Задание 3
+
+Пользователь задает исходную папку, программа удаляет из этой папки и из подпапок все папки
+debug и папки .vs с их содержимым. (найти инфу про удаление папок и файлов)
+
+РЕШЕНИЕ
+
+#include <iostream>
+#include <io.h>
+#include <direct.h>
+
+
+using namespace std;
+
+void scan_dir(const char* dir_path, const char* mask)
+{
+	char* new_path = new char[4000];
+	char* mask_path = new char[4000];
+
+	strcpy(mask_path, dir_path);
+	strcat(mask_path, "\\");
+	strcat(mask_path, mask);
+
+	_finddata_t c_file;
+	long hFile;
+	hFile = _findfirst(mask_path, &c_file);
+
+	if (strcmp(c_file.name, ".") != 0 && strcmp(c_file.name, "..") != 0)
+	{
+		
+		if (c_file.attrib & _A_SUBDIR)
+		{
+		
+			cout << c_file.name << "   " << "<DIR>" << endl;
+
+			
+			strcpy(new_path, dir_path);
+			strcat(new_path, "\\");
+			strcat(new_path, c_file.name);
+			
+			scan_dir(new_path, mask);
+		}
+		else
+			cout << dir_path << "\\" << c_file.name << "   " << c_file.size << endl;
+	}
+
+	
+while (_findnext(hFile, &c_file) == 0)
+	{
+	if (strcmp(c_file.name, ".") != 0 && strcmp(c_file.name, "..") != 0)
+	{
+		if (c_file.attrib & _A_SUBDIR)
+		{
+
+			cout << c_file.name << "   " << "<DIR>" << endl;
+			strcpy(new_path, dir_path);
+			strcat(new_path, "\\");
+			strcat(new_path, c_file.name);
+			scan_dir(new_path, mask);
+		}
+		else
+			cout << dir_path << "\\" << c_file.name << "   " << c_file.size << endl;
+	}
+	}
+	
+	_findclose(hFile);
+
+	delete[] new_path;
+	delete[] mask_path;
+}
+void del_file(const char* new_path, const char* f1, const char* f2, const char* mask = "*.*")
+{
+	char* path = new char[400];
+	char* file = new char[400];
+	char* npath = new char[400];
+
+	strcpy(path, new_path);
+	strcat(path, "\\");
+	strcat(path, mask);
+
+	long h2File;
+	_finddata_t c_file;
+	h2File = _findfirst(path, &c_file);
+	if (strcmp(c_file.name, ".") != 0 && strcmp(c_file.name, "..") != 0)
+	{
+		if (c_file.attrib & _A_SUBDIR)
+		{
+			
+			strcpy(npath, new_path);
+			strcat(npath, "\\");
+			strcat(npath, c_file.name);
+			del_file (npath, f1, f2);
+			_rmdir(npath);
+		}
+		else
+		{
+			strcpy(file, new_path);
+			strcat(file, "\\");
+			strcat(file, c_file.name);
+			remove(file);
+		}
+	}
+	while (_findnext(h2File, &c_file) == 0)
+	{
+		if (strcmp(c_file.name, ".") != 0 && strcmp(c_file.name, "..") != 0)
+		{
+			if (c_file.attrib & _A_SUBDIR)
+			{
+
+				strcpy(npath, new_path);
+				strcat(npath, "\\");
+				strcat(npath, c_file.name);
+				del_file(npath, f1, f2);
+				_rmdir(npath);
+			}
+			else
+			{
+				strcpy(file, new_path);
+				strcat(file, "\\");
+				strcat(file, c_file.name);
+				remove(file);
+			}
+		}
+	}
+
+		_findclose(h2File);
+	return;
+}
+
+void change_dir(const char* dir_path, const char* mask, const char* f1, const char* f2)
+{
+	
+	char* mask_path = new char[4000];
+	char* new_path = new char[4000];
+	
+	strcpy(mask_path, dir_path);
+	strcat(mask_path, "\\");
+	strcat(mask_path, mask);
+
+	_finddata_t c_file;
+	long hFile;
+	hFile = _findfirst(mask_path, &c_file);
+
+	if (strcmp(c_file.name, ".") != 0 && strcmp(c_file.name, "..") != 0)
+	{
+		if (c_file.attrib & _A_SUBDIR)
+		{
+			strcpy(new_path, dir_path);
+				strcat(new_path, "\\");
+				strcat(new_path, c_file.name);
+			if (strcmp(c_file.name, f1) == 0 || strcmp(c_file.name, f2) == 0)
+			{	del_file(new_path, f1, f2);
+				_rmdir(new_path);
+			}
+			else change_dir(new_path, mask, f1, f2);
+		}
+	}
+while (_findnext(hFile, &c_file) == 0)
+	{
+	 if (strcmp(c_file.name, ".") != 0 && strcmp(c_file.name, "..") != 0)
+	{
+		if (c_file.attrib & _A_SUBDIR)
+		{
+			strcpy(new_path, dir_path);
+			strcat(new_path, "\\");
+			strcat(new_path, c_file.name);
+			if (strcmp(c_file.name, f1) == 0 || strcmp(c_file.name, f2) == 0)
+			{
+				del_file(new_path, f1, f2);
+				_rmdir(new_path);
+			}
+			else change_dir(new_path, mask, f1, f2);
+		}
+	}
+	 
+	}
+
+	_findclose(hFile);
+
+	delete[] new_path;
+	delete[] mask_path;
+}
+void main()
+{
+	char str1[200];
+	char str2[200];
+	char str3[200];
+	cout << "Enter the location address:\n";
+	cin.getline(str1, 200);
+	cout << "\nEnter the names of folders to be emptied: \n";
+	cin.getline(str2, 200);
+	cin.getline(str3, 200);
+	scan_dir(str1, "*.*");
+	cout << "\n\nThe changed folder!\n\n\n"; 
+	change_dir(str1, "*.*", str2, str3);
+	scan_dir(str1, "*.*");
+	cout << "\n\nThe end.\n";
+}
+
+
