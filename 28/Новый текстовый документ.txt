@@ -1,0 +1,8 @@
+https://gist.github.com/master5o1/1330051
+https://www.sanfoundry.com/cpp-program-implement-doubly-linked-list/
+https://www.studytonight.com/data-structures/doubly-linked-list
+https://medium.com/programmercave/doubly-linked-list-c-implementation-e24686aa3d6d
+https://gist.github.com/master5o1/1330051
+https://www.geeksforgeeks.org/doubly-linked-list/
+https://gist.github.com/echo-akash/8543929a7fba6e22bffcf70cd7e65a7f
+https://www.ibm.com/developerworks/ru/library/l-data_structures_02/index.html
