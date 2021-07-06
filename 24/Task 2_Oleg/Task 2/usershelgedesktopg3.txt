@@ -1,0 +1,6 @@
+Students number: 4\
+Max students number: 10\
+Mary\Smith\34\female\Law\Marital\2\89.000000\
+John\Adams\24\male\Law\Marital\2\68.000000\
+Adam\Douglas\22\male\Law\Marital\2\90.000000\
+Richard\Carpenter\32\male\Law\Marital\2\80.000000\

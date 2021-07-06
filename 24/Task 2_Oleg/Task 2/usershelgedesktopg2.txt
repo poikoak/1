@@ -1,0 +1,7 @@
+Students number: 5\
+Max students number: 15\
+Mary\Johnson\24\female\Linguistics\Typology\3\67.000000\
+Ian\Holm\25\male\Linguistics\Typology\3\88.000000\
+Robert\Nash\28\male\Linguistics\Typology\3\95.000000\
+Britanny\Phillips\23\female\Linguistics\Typology\3\75.000000\
+Jacob\Dean\26\male\Linguistics\Typology\3\86.000000\

@@ -1,0 +1,31 @@
+FirstName : Vadik
+LastName : Aladik
+Age : 30
+Prize  : 2800
+Salary : 800
+_________________________
+FirstName : Gricha
+LastName : Gulisha
+Age : 22
+Salary : 1000
+_________________________
+FirstName : Chamba
+LastName : Mamba
+Age : 27
+Time at work : 100
+Salary : 300
+_________________________
+FirstName : Vadik
+LastName : Aladik
+Age : 30
+Prize  : 2800
+Salary : 800
+_________________________
+FirstName : Petr
+LastName : Osetr
+Age : 36
+Goods sold : 243
+Price per item : 500
+Total sales : 121500
+Payment  : 3645
+_________________________
